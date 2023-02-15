@@ -51,5 +51,6 @@
   },
   "dependencies": {
     "vite": "^3.2.5"
-  }
+  },
+  "type":"module"
 }
