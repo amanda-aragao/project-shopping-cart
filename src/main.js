@@ -10,11 +10,25 @@ const getProduts = document.querySelector('.products');
 
 const products = async () => {
   const response = await fetchProductsList('computador');
-  const allProduts = response.forEach((element) => {
+  response.forEach((element) => {
     const item = createProductElement(element);
+    item.className = 'item';
     getProduts.appendChild(item);
-    return allProduts;
   });
 };
 
+const loadingMessage = async () => {
+  const element = document.createElement('p');
+  element.innerHTML = 'carregando...';
+  element.className = 'loadingMessage';
+  getProduts.appendChild(element);
+  await products();
+};
+
+const clearMessage = () => {
+  getProduts.innerHTML = '';
+};
+
+loadingMessage();
+clearMessage();
 products();
