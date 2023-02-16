@@ -29,5 +29,11 @@ describe('Teste a função fetchProductsList', () => {
   it('Teste se, ao chamar a função fetchProductsList sem argumento, retorna um erro', () => {
     expect(() => fetchProductsList()).toEqual(new Error('Termo de busca não informado'));
   });
+  
+  it('Quando a requisição é rejeitada, ela deverá retornar erro', async () => {
+      await expect(fetchProductsList('computador')).rejects.toThrow(
+        new Error('Algum erro ocorreu, recarregue a página e tente novamente')
+      );
+    });
 
 });

@@ -29,5 +29,11 @@ describe('Teste a função fetchProduct', () => {
   it('Teste se, ao chamar a função fetchProductsList sem argumento, retorna um erro', () => {
     expect(() => fetchProduct()).toEqual(new Error('ID não informado'));
   });
+
+  it('Quando a requisição é rejeitada, ela deverá retornar erro', async () => {
+    await expect(fetchProduct(id)).rejects.toThrow(
+      new Error('Algum erro ocorreu, recarregue a página e tente novamente')
+    );
+  });
 });
 
