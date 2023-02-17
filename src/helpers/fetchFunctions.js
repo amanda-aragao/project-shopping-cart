@@ -1,25 +1,19 @@
-export const fetchProduct = (productID) => {
+export const fetchProduct = async (productID) => {
+  if (!productID) {
+    throw new Error('ID não informado');
+  }
   const api = `https://api.mercadolibre.com/items/${productID}`;
-  fetch(api)
-    .then((response) => response.json())
-    .then((data) => {
-      const resultApi = data;
-      if (!productID) {
-        throw new Error('ID não informado');
-      }
-      return resultApi;
-    });
+  const getFetch = await fetch(api);
+  const response = await getFetch.json();
+  return response;
 };
-fetchProduct('MLB1405519561');
 
-export const fetchProductsList = (parameter) => {
+export const fetchProductsList = async (parameter) => {
+  if (!parameter) {
+    throw new Error('Termo de busca não informado');
+  }
   const api = `https://api.mercadolibre.com/sites/MLB/search?q=${parameter}`;
-  return fetch(api)
-    .then((response) => response.json())
-    .then((data) => {
-      if (!parameter) {
-        throw new Error('Termo de busca não informado');
-      }
-      return data.results;
-    });
+  const getFetch = await fetch(api);
+  const response = await getFetch.json();
+  return response.results;
 };

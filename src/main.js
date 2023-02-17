@@ -1,10 +1,12 @@
 import { searchCep } from './helpers/cepFunctions';
 import './style.css';
-import { createProductElement } from './helpers/shopFunctions';
-import { fetchProductsList } from './helpers/fetchFunctions';
+import { createCartProductElement, createProductElement } from './helpers/shopFunctions'; /* createCartProductElement */
+import { fetchProductsList, fetchProduct } from './helpers/fetchFunctions';
+import { getSavedCartIDs } from './helpers/cartFunctions';
 
 document.querySelector('.cep-button').addEventListener('click', searchCep);
-fetchProductsList('computador');
+
+fetchProduct('MLB1405519561').then((data) => (data));
 
 const getProduts = document.querySelector('.products');
 
@@ -15,18 +17,31 @@ const loadingMessage = async () => {
   getProduts.appendChild(element);
 };
 
+const saveLocalStorage = async () => {
+  const keyStorage = document.querySelector('.cart__products');
+
+  const saveArrayStorage = getSavedCartIDs();
+  const getFunction = saveArrayStorage.map((item) => fetchProduct(item));
+  const organizePromises = await Promise.all(getFunction);
+  await organizePromises.forEach((item) => {
+    const cartProduct = createCartProductElement(item);
+    keyStorage.appendChild(cartProduct);
+  });
+};
+saveLocalStorage();
+
 const clearMessage = () => {
   getProduts.innerHTML = '';
 };
 
 const products = async () => {
   loadingMessage();
-  const response = await fetchProductsList('computador');
+  const responseName = await fetchProductsList('computador');
+
   clearMessage();
 
-  response.forEach((element) => {
+  responseName.forEach((element) => {
     const item = createProductElement(element);
-    item.className = 'item';
     getProduts.appendChild(item);
   });
 };

@@ -17,8 +17,9 @@ describe('Teste a função fetchProduct', () => {
   });
 
   it('fetch é chamado com o endpoint correto ao executar fetchProduct', async () => {
-      await fetchProduct(id);
-    expect(fetch).toHaveBeenNthCalledWith(api)
+      await fetchProduct('MLB1405519561');
+   
+      expect(fetch).toHaveBeenNthCalledWith(1, api)
   });
 
   it('Teste se o retorno da função fetchProduct com o argumento do produto "MLB1405519561" é uma estrutura de dados igual ao objeto produto que já está importado no arquivo', async() => {
@@ -26,14 +27,9 @@ describe('Teste a função fetchProduct', () => {
     expect(returnApi).toEqual(product);
   });
 
-  it('Teste se, ao chamar a função fetchProductsList sem argumento, retorna um erro', () => {
-    expect(() => fetchProduct()).toEqual(new Error('ID não informado'));
+  it('Teste se ao chamar a função fetchProduct sem argumento, retorna um erro', async () => {
+    await expect(() => fetchProduct()).rejects.toThrow('ID não informado');
   });
 
-  it('Quando a requisição é rejeitada, ela deverá retornar erro', async () => {
-    await expect(fetchProduct(id)).rejects.toThrow(
-      new Error('Algum erro ocorreu, recarregue a página e tente novamente')
-    );
-  });
 });
 

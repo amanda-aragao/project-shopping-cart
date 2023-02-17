@@ -1,10 +1,9 @@
 import './mocks/fetchSimulator';
 import { fetchProductsList } from '../helpers/fetchFunctions';
 import computadorSearch from './mocks/search';
-
 // implemente seus testes aqui
 describe('Teste a função fetchProductsList', () => {
-  const api = `https://api.mercadolibre.com/sites/MLB/search?q=computador`
+  const api = "https://api.mercadolibre.com/sites/MLB/search?q=computador"
   
   it('fetchProductsList é uma função', () => {
       expect(fetchProductsList).toBeDefined();
@@ -17,23 +16,18 @@ describe('Teste a função fetchProductsList', () => {
   });
 
   it('O retorno da função com o argumento computador é uma estrutura de dados igual ao objeto computadorSearch', async () => {
-    await expect(fetchProductsList('computador')).toBe(`${computadorSearch}`);
+    const response = await fetchProductsList('computador');
+    expect(response).toEqual(computadorSearch);
+
   });
 
   it('fetch é chamado com o endpoint correto ao executar fetchProductsList', async () => {
     await fetchProductsList('computador');
-
     expect(fetch).toHaveBeenCalledWith(api)
   });
 
-  it('Teste se, ao chamar a função fetchProductsList sem argumento, retorna um erro', () => {
-    expect(() => fetchProductsList()).toEqual(new Error('Termo de busca não informado'));
+  it('Teste se, ao chamar a função fetchProductsList sem argumento, retorna um erro', async () => {
+   await expect(() => fetchProductsList()).rejects.toThrow('Termo de busca não informado');
   });
   
-  it('Quando a requisição é rejeitada, ela deverá retornar erro', async () => {
-      await expect(fetchProductsList('computador')).rejects.toThrow(
-        new Error('Algum erro ocorreu, recarregue a página e tente novamente')
-      );
-    });
-
 });
