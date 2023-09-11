@@ -23,7 +23,7 @@ const saveLocalStorage = async () => {
   const saveArrayStorage = getSavedCartIDs();
   const getFunction = saveArrayStorage.map((item) => fetchProduct(item));
   const organizePromises = await Promise.all(getFunction);
-  await organizePromises.forEach((item) => {
+  organizePromises.forEach((item) => {
     const cartProduct = createCartProductElement(item);
     keyStorage.appendChild(cartProduct);
   });
