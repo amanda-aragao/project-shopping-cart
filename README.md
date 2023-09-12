@@ -1,4 +1,4 @@
-## Carrinho de Compras Dinâmico com API do Mercado Livre
+## 🛒 SHOPPING CART 🛒
 Descrição do Projeto
 Neste projeto, desenvolvi um carrinho de compras totalmente dinâmico, que permite ao usuário buscar produtos à venda usando a API do Mercado Livre. Além disso, implementei uma abordagem orientada a testes (TDD - Test Driven Development) para garantir a qualidade e o desempenho do código.
 
